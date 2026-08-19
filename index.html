@@ -55,7 +55,13 @@ fbq('track', 'PageView');
   --max: 520px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+}
 html, body {
   min-height: 100%;
   font-family: var(--font);
@@ -63,6 +69,15 @@ html, body {
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-x: none;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+img, button, a, .profile-gallery, .match-card, .reveal-card, .option {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  outline: none !important;
 }
 
 button, input { font: inherit; }
