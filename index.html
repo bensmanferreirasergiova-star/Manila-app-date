@@ -51,8 +51,44 @@ fbq('track', 'PageView');
   --green-text: #065f46;
   --bg: #ffffff;
   --card-bg: #faf8fa;
+  --pill-bg: #f4f0f4;
+  --pill-color: #635e67;
+  --date-note-bg: #fbf7fb;
+  --date-note-color: #1f1b24;
+  --input-bg: #ffffff;
+  --input-border: #ded8df;
+  --primary-bg: #111113;
+  --primary-color: #ffffff;
+  --secondary-bg: #f7f4f7;
+  --secondary-color: #111113;
+  --shadow-color: rgba(0,0,0,0.12);
   --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --max: 520px;
+}
+
+[data-theme="dark"] {
+  --ink: #f8f6fb;
+  --muted: #a49cb0;
+  --line: #262232;
+  --accent: #ff5c73;
+  --accent-soft: #2e161c;
+  --green: #10b981;
+  --green-soft: #08291e;
+  --green-border: #135d46;
+  --green-text: #6ee7b7;
+  --bg: #0d0c12;
+  --card-bg: #181622;
+  --pill-bg: #211d2c;
+  --pill-color: #c9c1d6;
+  --date-note-bg: #1a1725;
+  --date-note-color: #f0ecf7;
+  --input-bg: #181622;
+  --input-border: #322d3f;
+  --primary-bg: #f8f6fb;
+  --primary-color: #0e0d13;
+  --secondary-bg: #221e2e;
+  --secondary-color: #f8f6fb;
+  --shadow-color: rgba(0,0,0,0.5);
 }
 
 * {
@@ -70,6 +106,7 @@ html, body {
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-x: none;
   -webkit-tap-highlight-color: transparent !important;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 img, button, a, .profile-gallery, .match-card, .reveal-card, .option {
@@ -107,11 +144,40 @@ a { color: inherit; text-decoration: none; }
 }
 .brand span { color: var(--accent); }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.theme-toggle:hover {
+  transform: scale(1.1);
+  border-color: var(--accent);
+}
+.theme-toggle:active {
+  transform: scale(0.92);
+}
+
 .header-pill {
   font-size: 12px;
   font-weight: 750;
-  color: #635e67;
-  background: #f4f0f4;
+  color: var(--pill-color);
+  background: var(--pill-bg);
   border-radius: 999px;
   padding: 6px 12px;
 }
@@ -179,15 +245,15 @@ p.sub {
   min-height: 58px;
   border: 0;
   border-radius: 18px;
-  background: var(--ink);
-  color: #fff;
+  background: var(--primary-bg);
+  color: var(--primary-color);
   font-weight: 800;
   font-size: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(17,17,19,0.18);
+  box-shadow: 0 10px 24px var(--shadow-color);
   transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
 }
 .primary:active { transform: scale(0.985); opacity: 0.92; }
@@ -197,23 +263,24 @@ p.sub {
   min-height: 52px;
   border: 0;
   border-radius: 16px;
-  background: #f7f4f7;
-  color: var(--ink);
+  background: var(--secondary-bg);
+  color: var(--secondary-color);
   font-weight: 750;
   font-size: 15px;
   cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 .free-note {
   text-align: center;
   font-size: 13px;
-  color: #88828b;
+  color: var(--muted);
   margin-top: 12px;
 }
 
 /* PROGRESS */
 .progress {
   height: 4px;
-  background: #f2edf2;
+  background: var(--line);
   border-radius: 99px;
   margin: 8px 0 24px;
   overflow: hidden;
@@ -236,6 +303,7 @@ p.sub {
   padding: 16px 18px;
   background: var(--card-bg);
   border: 1px solid var(--line);
+  color: var(--ink);
   border-radius: 18px;
   text-align: left;
   font-weight: 750;
@@ -245,10 +313,10 @@ p.sub {
 }
 .option .label { display: flex; align-items: center; }
 .option .emoji { font-size: 22px; margin-right: 12px; }
-.option .chevron { color: #aaa4ad; font-size: 20px; font-weight: 400; }
+.option .chevron { color: var(--muted); font-size: 20px; font-weight: 400; }
 .option:hover, .option:active {
   background: var(--accent-soft);
-  border-color: #ffccd3;
+  border-color: var(--accent);
   transform: scale(0.99);
 }
 
@@ -256,24 +324,25 @@ p.sub {
 .input {
   width: 100%;
   min-height: 58px;
-  border: 1.5px solid #ded8df;
+  border: 1.5px solid var(--input-border);
   border-radius: 18px;
   padding: 0 18px;
   font-size: 17px;
-  background: #fff;
+  background: var(--input-bg);
+  color: var(--ink);
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 .input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(239,83,102,0.12);
+  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
 /* ROULETTE MATCHING */
 .matching { text-align: center; padding: 24px 0 10px; }
 .matching .status {
   min-height: 38px;
-  color: #2b2633;
+  color: var(--ink);
   font-size: 17px;
   font-weight: 750;
   margin-top: 16px;
@@ -556,7 +625,12 @@ p.sub {
 <div id="app">
   <header class="site-header">
     <a class="brand" href="/" data-home>near<span>ly</span></a>
-    <span class="header-pill">📍 Manila</span>
+    <div class="header-right">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle Dark/Light Mode" title="Cambiar tema">
+        <span class="theme-icon">🌙</span>
+      </button>
+      <span class="header-pill">📍 Manila</span>
+    </div>
   </header>
 
   <main id="screen" aria-live="polite"></main>
@@ -1036,7 +1110,37 @@ function showProfile() {
   }
 }
 
+// THEME MANAGER (Automatic Device Sync + Manual Toggle with LocalStorage)
+function initTheme() {
+  const savedTheme = localStorage.getItem("nearlyTheme");
+  const systemPrefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
+  applyTheme(initialTheme);
+
+  if (window.matchMedia) {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+      if (!localStorage.getItem("nearlyTheme")) {
+        applyTheme(e.matches ? "dark" : "light");
+      }
+    });
+  }
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  const icon = document.querySelector(".theme-icon");
+  if (icon) icon.textContent = theme === "dark" ? "☀️" : "🌙";
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute("data-theme") || "light";
+  const next = current === "dark" ? "light" : "dark";
+  localStorage.setItem("nearlyTheme", next);
+  applyTheme(next);
+}
+
 // Initial mount
+initTheme();
 home();
 </script>
 </body>
