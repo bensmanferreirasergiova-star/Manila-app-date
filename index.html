@@ -366,26 +366,46 @@ p.sub {
 .gallery-arrow {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
+  transform: translateY(-50%) scale(1);
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  border: 0;
+  border: 1.5px solid rgba(255,255,255,0.8);
   background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.18);
   color: var(--ink);
   cursor: pointer;
-  z-index: 10;
+  z-index: 15;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.gallery-arrow svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  pointer-events: none;
+  stroke: #17151a;
+  transition: stroke 0.2s ease;
 }
 .gallery-arrow.prev { left: 14px; }
 .gallery-arrow.next { right: 14px; }
+
+/* EFECTO LUPA / ZOOM EN HOVER */
+.gallery-arrow:hover {
+  transform: translateY(-50%) scale(1.22);
+  background: #ffffff;
+  box-shadow: 0 10px 28px rgba(239,83,102,0.35);
+  border-color: #ffccd3;
+}
+.gallery-arrow:hover svg {
+  stroke: var(--accent);
+}
+.gallery-arrow:active {
+  transform: translateY(-50%) scale(0.92);
+}
 
 .photo-hint {
   font-size: 13px;
@@ -504,7 +524,7 @@ p.sub {
 <div id="confetti" class="confetti" aria-hidden="true"></div>
 
 <script>
-// Sergio's match profile details and photos
+// Sergio's match profile details and photos (Handsome European/Spanish guy lifestyle)
 const MATCH = {
   name: "Sergio",
   age: 27,
@@ -513,19 +533,19 @@ const MATCH = {
   instagram: "sergioestevez",
   photos: [
     "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=85",
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=85",
-    "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=800&q=85",
-    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=85"
+    "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=85",
+    "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=85",
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=85"
   ]
 };
 
-// Roulette profile previews
+// Roulette profile previews (Independent Manila candidates)
 const ROULETTE_PHOTOS = [
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+  "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
   "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80",
-  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
+  "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80",
+  "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80",
+  "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80"
 ];
 
 let state = {
@@ -869,8 +889,12 @@ function showProfile() {
       
       <div class="profile-gallery" id="photoGallery">
         <img id="profilePhoto" src="${MATCH.photos[0]}" alt="${MATCH.name}">
-        <button class="gallery-arrow prev" id="prevBtn" aria-label="Previous photo">‹</button>
-        <button class="gallery-arrow next" id="nextBtn" aria-label="Next photo">›</button>
+        <button class="gallery-arrow prev" id="prevBtn" aria-label="Previous photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="gallery-arrow next" id="nextBtn" aria-label="Next photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
       </div>
       <div class="photo-hint">‹ Tap arrows to browse · Tap photo to open Instagram ›</div>
 
