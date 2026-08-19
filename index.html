@@ -669,13 +669,12 @@ const MATCH = {
   ]
 };
 
-// Roulette profile previews (Independent Manila candidates)
+// Roulette profile previews (Exclusive Sergio photos)
 const ROULETTE_PHOTOS = [
-  "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
-  "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-  "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80",
-  "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80",
-  "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80"
+  "assets/sergio/sergio-1.jpg",
+  "assets/sergio/sergio-2.jpg",
+  "assets/sergio/sergio-3.jpg",
+  "assets/sergio/sergio-4.jpg"
 ];
 
 let state = {
@@ -733,7 +732,7 @@ function notifySergio(leadData) {
 function home() {
   screen.innerHTML = `
     <section class="hero">
-      <img class="hero-photo" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85" alt="Dinner in Manila">
+      <img class="hero-photo" src="assets/home-hero.jpg" alt="Meet someone special">
       <div class="eyebrow">NEARLY · MANILA</div>
       <h1>Meet someone new in Manila.</h1>
       <p class="hero-copy">Skip the endless texting. Answer 3 quick questions and get introduced to someone for dinner, drinks, or coffee.</p>
@@ -1108,15 +1107,16 @@ function showProfile() {
       </div>
       <div class="profile-meta">📍 ${MATCH.location} · ${MATCH.nationality}</div>
 
-      <a class="instagram-btn" id="igBtn" href="https://instagram.com/${encodeURIComponent(MATCH.instagram)}" target="_blank" rel="noopener">
-        <span>📸 View ${MATCH.name} on Instagram →</span>
-      </a>
+      <div class="date-note">🍽️ ${MATCH.name} would like to invite you for ${state.datePreference ? state.datePreference.toLowerCase() : "dinner"}.</div>
 
-      <!-- Green Reciprocity Badge: ONLY APPEARS AFTER CLICKING VIEW SERGIO -->
-      <div class="match-badge-green" id="reciprocityBadge" style="display: none; margin-top: 16px;">
+      <div class="match-badge-green" id="reciprocityBadge">
         <span>✅</span>
         <span>He will also receive your contact information.</span>
       </div>
+
+      <a class="instagram-btn" id="igBtn" href="https://instagram.com/${encodeURIComponent(MATCH.instagram)}" target="_blank" rel="noopener">
+        <span>📸 View ${MATCH.name} on Instagram →</span>
+      </a>
     </section>
   `;
 
@@ -1141,32 +1141,13 @@ function showProfile() {
   nextBtn.onclick = nextPhoto;
   prevBtn.onclick = prevPhoto;
 
-  // SERGIO RULE: Trigger transition screen on button, open Instagram, and reveal green reciprocity badge
-  let isConnecting = false;
   const openInstagram = () => {
-    if (isConnecting) return;
-    isConnecting = true;
-
-    if (igBtn) {
-      igBtn.innerHTML = `<span>🍽️ Sergio would like to invite you for ${state.datePreference ? state.datePreference.toLowerCase() : "dinner"}…</span>`;
+    window.open(`https://instagram.com/${encodeURIComponent(MATCH.instagram)}`, "_blank");
+    const badge = document.querySelector("#reciprocityBadge");
+    if (badge) {
+      badge.classList.add("highlight");
+      confetti();
     }
-
-    setTimeout(() => {
-      window.open(`https://instagram.com/${encodeURIComponent(MATCH.instagram)}`, "_blank");
-      
-      const badge = document.querySelector("#reciprocityBadge");
-      if (badge) {
-        badge.style.display = "flex";
-        badge.classList.add("highlight");
-        badge.innerHTML = `<span>✅</span><span>He will also receive your contact information.</span>`;
-        confetti();
-      }
-
-      if (igBtn) {
-        igBtn.innerHTML = `<span>📸 Open ${MATCH.name} on Instagram →</span>`;
-      }
-      isConnecting = false;
-    }, 750);
   };
 
   gallery.onclick = openInstagram;
