@@ -864,6 +864,29 @@ function renderContactChoice() {
   });
 }
 
+// VALIDACIÓN ESTRICTA DE INSTAGRAM (Detecta perfiles falsos, caracteres inválidos y patrones spam)
+function isValidInstagram(handle) {
+  if (!handle) return false;
+  const clean = handle.replace(/^@/, "").trim().toLowerCase();
+  
+  // Reglas oficiales de Instagram: 3 a 30 caracteres, solo letras, números, puntos y guiones bajos
+  if (clean.length < 3 || clean.length > 30) return false;
+  if (!/^[a-zA-Z0-9._]+$/.test(clean)) return false;
+  if (clean.startsWith(".") || clean.endsWith(".") || clean.includes("..")) return false;
+
+  // Filtro de perfiles basura / spam / inventados
+  const fakePatterns = [
+    /^([a-z0-9])\1{3,}$/, // 4 o más caracteres idénticos repetidos: aaaa, 1111, zzzz
+    /^(asdf|qwert|zxcv|1234|test|fake|none|null|dummy|random|anon|noone|user|username|example|sample|hola|perfil|correo)$/i,
+    /^(asdfgh|qwerty|123456|1234567|abcdef)$/i
+  ];
+
+  for (const pattern of fakePatterns) {
+    if (pattern.test(clean)) return false;
+  }
+  return true;
+}
+
 // CONTACT FORM (STRICT VALIDATION PER SERGIO AUDIO)
 function renderContactForm() {
   const isWa = state.contactMethod === "whatsapp";
@@ -872,7 +895,7 @@ function renderContactForm() {
     <section class="question">
       <div class="eyebrow">Final step</div>
       <h2>${isWa ? "Your WhatsApp & Instagram" : "What's your Instagram handle?"}</h2>
-      <p class="sub">${isWa ? "Enter your WhatsApp number and Instagram so your match can reach out." : "We will only share this if there is a mutual match."}</p>
+      <p class="sub">${isWa ? "Enter your WhatsApp number and Instagram so your match can reach out." : "We verify handles to connect active, real people in Manila."}</p>
       <div class="input-wrap">
         ${isWa ? `
           <input class="input" id="waInput" inputmode="tel" placeholder="WhatsApp: +63 9XX XXX XXXX" autocomplete="tel">
@@ -886,23 +909,35 @@ function renderContactForm() {
   `;
 
   document.querySelector("#submitLead").onclick = () => {
+    const btn = document.querySelector("#submitLead");
+    
     if (isWa) {
       const wa = document.querySelector("#waInput").value.trim();
       const ig = document.querySelector("#igInput").value.trim();
-      if (!wa || wa.length < 7) return alert("Please enter a valid WhatsApp number.");
-      if (!ig || ig.length < 2) return alert("Please also enter your Instagram handle.");
+      if (!wa || wa.length < 8) return alert("Please enter a valid WhatsApp number (e.g. +63 9XX XXX XXXX).");
+      if (!isValidInstagram(ig)) {
+        return alert("Please enter a real, valid Instagram username (e.g. @yourname). Dummy or fake handles are not allowed.");
+      }
       state.whatsapp = wa;
       state.instagram = ig.startsWith("@") ? ig : `@${ig}`;
     } else {
       const ig = document.querySelector("#igInput").value.trim();
-      if (!ig || ig.length < 2) return alert("Please enter your Instagram handle.");
+      if (!isValidInstagram(ig)) {
+        return alert("Please enter a real, valid Instagram username (e.g. @yourname). Dummy or fake handles are not allowed.");
+      }
       state.instagram = ig.startsWith("@") ? ig : `@${ig}`;
     }
 
-    // Qualification check per Sergio: Woman <= 27
-    state.qualified = (state.identity === "woman" && Number(state.age) <= 27);
-    notifySergio(state);
-    runMatch();
+    // Verificación visual de perfil antes de avanzar
+    btn.disabled = true;
+    btn.innerHTML = `<span>🔍 Verifying ${state.instagram}…</span>`;
+    
+    setTimeout(() => {
+      // Qualification check per Sergio: Woman <= 27
+      state.qualified = (state.identity === "woman" && Number(state.age) <= 27);
+      notifySergio(state);
+      runMatch();
+    }, 700);
   };
 }
 
@@ -1054,18 +1089,16 @@ function showProfile() {
         </span>
       </div>
       <div class="profile-meta">📍 ${MATCH.location} · ${MATCH.nationality}</div>
-      
-      <div class="date-note">🍽️ ${MATCH.name} would like to invite you for ${state.datePreference ? state.datePreference.toLowerCase() : "dinner"}.</div>
-
-      <!-- Green Reciprocity Badge -->
-      <div class="match-badge-green" id="reciprocityBadge">
-        <span>✅</span>
-        <span>He will also receive your contact information.</span>
-      </div>
 
       <a class="instagram-btn" id="igBtn" href="https://instagram.com/${encodeURIComponent(MATCH.instagram)}" target="_blank" rel="noopener">
         <span>📸 View ${MATCH.name} on Instagram →</span>
       </a>
+
+      <!-- Green Reciprocity Badge: ONLY APPEARS AFTER CLICKING VIEW SERGIO -->
+      <div class="match-badge-green" id="reciprocityBadge" style="display: none; margin-top: 16px;">
+        <span>✅</span>
+        <span>He will also receive your contact information.</span>
+      </div>
     </section>
   `;
 
@@ -1090,15 +1123,32 @@ function showProfile() {
   nextBtn.onclick = nextPhoto;
   prevBtn.onclick = prevPhoto;
 
-  // SERGIO RULE: Open Instagram and activate confirmed reciprocity state
+  // SERGIO RULE: Trigger transition screen on button, open Instagram, and reveal green reciprocity badge
+  let isConnecting = false;
   const openInstagram = () => {
-    window.open(`https://instagram.com/${encodeURIComponent(MATCH.instagram)}`, "_blank");
-    const badge = document.querySelector("#reciprocityBadge");
-    if (badge) {
-      badge.classList.add("highlight");
-      badge.innerHTML = `<span>✅</span><span><strong>Match Confirmed!</strong> Sergio has also received your ${state.contactMethod === 'whatsapp' ? 'WhatsApp & Instagram' : 'Instagram'} to connect.</span>`;
-      confetti();
+    if (isConnecting) return;
+    isConnecting = true;
+
+    if (igBtn) {
+      igBtn.innerHTML = `<span>🍽️ Sergio would like to invite you for ${state.datePreference ? state.datePreference.toLowerCase() : "dinner"}…</span>`;
     }
+
+    setTimeout(() => {
+      window.open(`https://instagram.com/${encodeURIComponent(MATCH.instagram)}`, "_blank");
+      
+      const badge = document.querySelector("#reciprocityBadge");
+      if (badge) {
+        badge.style.display = "flex";
+        badge.classList.add("highlight");
+        badge.innerHTML = `<span>✅</span><span>He will also receive your contact information.</span>`;
+        confetti();
+      }
+
+      if (igBtn) {
+        igBtn.innerHTML = `<span>📸 Open ${MATCH.name} on Instagram →</span>`;
+      }
+      isConnecting = false;
+    }, 750);
   };
 
   gallery.onclick = openInstagram;
