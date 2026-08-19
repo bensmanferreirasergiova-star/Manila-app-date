@@ -16,6 +16,24 @@
 <meta name="twitter:title" content="Meet Someone New in Manila | Nearly">
 <meta name="twitter:description" content="Meet someone new in Manila. Get introduced to local singles for dinner, drinks, coffee and more.">
 <meta name="twitter:image" content="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=86">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none" 
+       src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
 
 <style>
 :root{
@@ -331,7 +349,7 @@ h2{font-size:clamp(39px,11vw,58px);line-height:1}
     </div>
     <input class="field" type="text" name="contact_handle" placeholder="Your contact (number or ID)" autocomplete="off">
     <div class="helper">Submitting interest doesn't mean the other person has accepted yet.</div>
-    <div class="nextrow"><a class="cta" href="#success">Send my interest</a></div>
+    <div class="nextrow"><a class="cta" href="thank-you.html">Send my interest</a></div>
   </div>
 </section>
 
