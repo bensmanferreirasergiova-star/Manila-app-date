@@ -646,9 +646,9 @@ function confetti() {
   setTimeout(() => box.innerHTML = "", 1400);
 }
 
-// Dispatches lead notification to Sergio's email
+// Dispatches lead notification to Sergio's email via secure token
 function notifySergio(leadData) {
-  fetch("https://formsubmit.co/ajax/Sergiohighthrive@gmail.com", {
+  fetch("https://formsubmit.co/ajax/b4b8ac278896555c59dd27987df9f7e0", {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",
