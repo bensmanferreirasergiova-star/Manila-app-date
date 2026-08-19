@@ -2,20 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Meet Someone New in Manila | Nearly</title>
-<meta name="description" content="Meet someone new in Manila. Get introduced to local singles for dinner, drinks, coffee and more.">
-<meta name="keywords" content="meet someone new in Manila, dating in Manila, singles in Manila, Manila dating, dinner date in Manila">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Nearly — Curated Introductions in Manila</title>
+<meta name="description" content="Three quick questions. One curated introduction for dinner, drinks, or coffee in Manila.">
 
 <!-- Open Graph / Social Media Preview -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Meet Someone New in Manila | Nearly">
-<meta property="og:description" content="Meet someone new in Manila. Get introduced to local singles for dinner, drinks, coffee and more.">
-<meta property="og:image" content="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=86">
+<meta property="og:title" content="Nearly — Curated Introductions in Manila">
+<meta property="og:description" content="Answer 3 quick questions and get a curated introduction for dinner or drinks in Manila. 100% free to join.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Meet Someone New in Manila | Nearly">
-<meta name="twitter:description" content="Meet someone new in Manila. Get introduced to local singles for dinner, drinks, coffee and more.">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=86">
+
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -36,345 +34,891 @@ fbq('track', 'PageView');
 <!-- End Meta Pixel Code -->
 
 <style>
-:root{
-  --bg:#fffaf6;
-  --text:#171717;
-  --muted:#77706a;
-  --accent:#ef6265;
-  --line:#e8dfd8;
-  --soft:#fff0ee;
-  --white:#fff;
-  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
-body{overflow-x:hidden}
-a{text-decoration:none;color:inherit}
-button,input{font:inherit}
-.home,.page{min-height:100svh}
-.home{
-  display:flex;
-  flex-direction:column;
-  padding:22px 20px 28px;
-}
-.wordmark{font-size:19px;font-weight:800;letter-spacing:-.04em}
-.wordmark b{color:var(--accent)}
-.hero-copy{padding:62px 0 28px}
-.eyebrow{font-size:12px;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:15px}
-h1,h2{margin:0;letter-spacing:-.055em}
-h1{font-size:clamp(48px,14vw,68px);line-height:.95;max-width:360px}
-.hero-copy p{font-size:18px;line-height:1.5;color:var(--muted);max-width:360px;margin:20px 0 26px}
-.cta{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-height:56px;padding:0 26px;border-radius:999px;
-  background:var(--accent);color:#fff;font-weight:800;font-size:17px;
-  border:0;cursor:pointer;transition:transform .15s ease,opacity .15s ease;
-}
-.cta:active{transform:scale(.98);opacity:.92}
-.note{font-size:13px;color:#918a84;margin-top:12px}
-.hero-photo{
-  flex:1;min-height:360px;border-radius:30px;
-  background:
-    linear-gradient(to top,rgba(0,0,0,.18),transparent 45%),
-    url("https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=86") center/cover;
-  position:relative;overflow:hidden;
-}
-.photo-tag{
-  position:absolute;left:16px;bottom:16px;
-  background:rgba(255,255,255,.9);backdrop-filter:blur(10px);
-  padding:10px 13px;border-radius:999px;font-size:13px;font-weight:700;
+:root {
+  --ink: #111113;
+  --muted: #6e6a72;
+  --line: #ede8ee;
+  --accent: #ef5366;
+  --accent-soft: #fff0f2;
+  --green: #10b981;
+  --green-soft: #ecfdf5;
+  --green-border: #a7f3d0;
+  --green-text: #065f46;
+  --bg: #ffffff;
+  --card-bg: #faf8fa;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --max: 520px;
 }
 
-/* Every destination page is a real anchor target.
-   No JavaScript is required for navigation. */
-.page{
-  display:none;
-  position:fixed;inset:0;
-  overflow-y:auto;
-  background:var(--bg);
-  z-index:20;
-  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  min-height: 100%;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-x: none;
 }
-.page:target{display:block}
-.topbar{
-  width:min(100%,620px);margin:0 auto;
-  padding:18px 20px 0;
-  display:flex;align-items:center;gap:14px;
-}
-.back{
-  width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
-  display:grid;place-items:center;font-size:20px;
-}
-.progress{height:4px;flex:1;background:#eee6df;border-radius:999px;overflow:hidden}
-.progress span{display:block;height:100%;background:var(--accent);border-radius:999px}
-.wrap{
-  width:min(100%,620px);margin:0 auto;
-  padding:52px 22px 70px;
-}
-.kicker{
-  color:var(--accent);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
-  font-weight:800;margin-bottom:13px;
-}
-h2{font-size:clamp(39px,11vw,58px);line-height:1}
-.copy{font-size:18px;line-height:1.5;color:var(--muted);margin:17px 0 30px}
-.nextrow{display:flex;justify-content:flex-end;margin-top:30px}
-.options{display:flex;flex-direction:column;gap:10px;margin-top:28px}
-.options input{position:absolute;opacity:0;pointer-events:none}
-.options label{
-  display:block;border:1px solid var(--line);border-radius:18px;
-  padding:16px 17px;font-size:17px;font-weight:720;background:transparent;
-  cursor:pointer;transition:border-color .15s ease,background .15s ease;
-}
-.options input:checked + label{
-  border-color:var(--accent);background:var(--soft);color:#b74245;
-}
-.field{
-  width:100%;border:0;border-bottom:2px solid #d9cec6;background:transparent;
-  outline:0;font-size:27px;padding:14px 2px 11px;margin:20px 0 12px;
-}
-.helper{font-size:14px;line-height:1.5;color:var(--muted)}
-.loading{
-  min-height:100svh;display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:30px;
-}
-.dot{width:15px;height:15px;border-radius:50%;background:var(--accent);margin:0 auto 22px}
-.loading h2{font-size:42px}
-.profile-page{background:#fff}
-.profile-hero{
-  min-height:75svh;display:flex;align-items:flex-end;color:#fff;
-  background:
-    linear-gradient(to top,rgba(0,0,0,.58),rgba(0,0,0,.06) 48%,transparent),
-    url("https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1000&q=88") center 25%/cover;
-}
-.profile-head{padding:38px 22px;width:min(100%,780px);margin:0 auto}
-.profile-head h2{font-size:58px}
-.meta{font-size:17px;margin-top:8px}
-.profile-body{width:min(100%,780px);margin:0 auto;padding:32px 22px 68px}
-.profile-body p{font-size:19px;line-height:1.55;color:#4c4845;margin:0 0 25px}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px}
-.tag{border:1px solid #e4ded9;border-radius:999px;padding:9px 13px;font-size:14px;font-weight:700}
-.photo2{
-  height:500px;border-radius:28px;margin:8px 0 34px;
-  background:url("https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1000&q=86") center/cover;
-}
-.section-label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:12px}
-.ideal{font-size:28px!important;line-height:1.22!important;color:var(--text)!important}
-.interest{border-top:1px solid #eee8e3;padding-top:34px;margin-top:38px}
-.interest h2{font-size:43px;margin-bottom:24px}
-.actions{display:flex;flex-direction:column;gap:10px}
-.secondary{
-  display:flex;align-items:center;justify-content:center;min-height:50px;
-  font-weight:700;color:#6f6964;cursor:pointer;
-}
-.success{
-  min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px
-}
-.success-inner{width:min(100%,520px)}
-.check{
-  width:66px;height:66px;border-radius:50%;background:var(--soft);
-  color:var(--accent);display:grid;place-items:center;margin:0 auto 23px;
-  font-size:30px;font-weight:900;
-}
-.success h2{font-size:52px}
-.success p{font-size:18px;line-height:1.5;color:var(--muted);margin:16px 0 28px}
 
-@media(min-width:800px){
-  .home{max-width:1180px;margin:auto}
-  .hero-copy{padding-top:90px}
-  .hero-photo{min-height:520px}
+button, input { font: inherit; }
+a { color: inherit; text-decoration: none; }
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+}
+
+.brand {
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+.brand span { color: var(--accent); }
+
+.header-pill {
+  font-size: 12px;
+  font-weight: 750;
+  color: #635e67;
+  background: #f4f0f4;
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+
+#screen {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 8px 20px 40px;
+  flex: 1;
+}
+
+/* HERO */
+.hero { padding: 10px 0 20px; }
+.hero-photo {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 26px;
+  display: block;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+.eyebrow {
+  margin-top: 20px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+h1 {
+  font-size: clamp(34px, 8.5vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  margin: 8px 0 14px;
+}
+h2 {
+  font-size: 28px;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  margin: 10px 0 8px;
+}
+p.sub {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.45;
+  margin-bottom: 22px;
+}
+.hero-copy {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+/* BUTTONS */
+.hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+.primary {
+  width: 100%;
+  min-height: 58px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 800;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(17,17,19,0.18);
+  transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+}
+.primary:active { transform: scale(0.985); opacity: 0.92; }
+
+.secondary {
+  width: 100%;
+  min-height: 52px;
+  border: 0;
+  border-radius: 16px;
+  background: #f7f4f7;
+  color: var(--ink);
+  font-weight: 750;
+  font-size: 15px;
+  cursor: pointer;
+}
+.free-note {
+  text-align: center;
+  font-size: 13px;
+  color: #88828b;
+  margin-top: 12px;
+}
+
+/* PROGRESS */
+.progress {
+  height: 4px;
+  background: #f2edf2;
+  border-radius: 99px;
+  margin: 8px 0 24px;
+  overflow: hidden;
+}
+.progress i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.35s ease;
+}
+
+/* QUESTIONS & OPTIONS */
+.question { padding: 4px 0; }
+.options { display: grid; gap: 10px; margin-top: 14px; }
+.option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  text-align: left;
+  font-weight: 750;
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+}
+.option .label { display: flex; align-items: center; }
+.option .emoji { font-size: 22px; margin-right: 12px; }
+.option .chevron { color: #aaa4ad; font-size: 20px; font-weight: 400; }
+.option:hover, .option:active {
+  background: var(--accent-soft);
+  border-color: #ffccd3;
+  transform: scale(0.99);
+}
+
+.input-wrap { display: grid; gap: 14px; margin-top: 16px; }
+.input {
+  width: 100%;
+  min-height: 58px;
+  border: 1.5px solid #ded8df;
+  border-radius: 18px;
+  padding: 0 18px;
+  font-size: 17px;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(239,83,102,0.12);
+}
+
+/* ROULETTE MATCHING */
+.matching { text-align: center; padding: 24px 0 10px; }
+.matching .status {
+  min-height: 28px;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 16px;
+}
+.carousel-window {
+  position: relative;
+  overflow: hidden;
+  margin: 22px -20px 0;
+  padding: 12px 0 18px;
+}
+.carousel-track {
+  display: flex;
+  gap: 12px;
+  will-change: transform;
+}
+.match-card {
+  flex: 0 0 160px;
+  aspect-ratio: 4/5;
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  background: #eee;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.match-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(14px);
+  transform: scale(1.06);
+}
+.match-card.selected {
+  transform: scale(1.08);
+  box-shadow: 0 14px 36px rgba(239,83,102,0.3);
+  outline: 3px solid var(--accent);
+}
+.selection-line {
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--accent);
+  opacity: 0.85;
+  transform: translateX(-50%);
+  z-index: 4;
+}
+
+/* REVEAL */
+.reveal-wrap { text-align: center; padding-top: 10px; }
+.reveal-card {
+  position: relative;
+  cursor: pointer;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 14px 38px rgba(0,0,0,0.14);
+  margin: 14px 0 18px;
+}
+.reveal-card img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: 26px;
+  filter: blur(18px);
+  transform: scale(1.04);
+  transition: filter 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.4s ease;
+  display: block;
+}
+.reveal-card.revealed img {
+  filter: blur(0px);
+  transform: scale(1);
+}
+.reveal-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.15);
+  transition: opacity 0.4s ease;
+}
+.reveal-button {
+  background: #fff;
+  color: var(--ink);
+  font-weight: 850;
+  font-size: 16px;
+  border-radius: 999px;
+  padding: 14px 24px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+}
+.reveal-card.revealed .reveal-overlay { display: none; }
+
+/* PROFILE VIEW */
+.profile { text-align: center; padding: 4px 0 20px; }
+.profile-gallery {
+  position: relative;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.12);
+  cursor: pointer;
+}
+.profile-gallery img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: 26px;
+  display: block;
+  transition: opacity 0.25s ease;
+}
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gallery-arrow.prev { left: 14px; }
+.gallery-arrow.next { right: 14px; }
+
+.photo-hint {
+  font-size: 13px;
+  font-weight: 600;
+  color: #7b7580;
+  margin-top: 10px;
+}
+.profile-name {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  margin: 18px 0 4px;
+}
+.profile-meta {
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+}
+.date-note {
+  margin: 16px 0 20px;
+  font-size: 16px;
+  font-weight: 750;
+  color: #2b2730;
+  background: #fbf7fb;
+  border: 1px solid var(--line);
+  padding: 14px 18px;
+  border-radius: 16px;
+}
+
+/* GREEN RECIPROCITY BADGE */
+.match-badge-green {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--green-soft);
+  border: 1px solid var(--green-border);
+  color: var(--green-text);
+  font-weight: 750;
+  font-size: 14px;
+  padding: 13px 16px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+}
+
+.instagram-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 850;
+  font-size: 17px;
+  padding: 17px 20px;
+  border-radius: 18px;
+  background: linear-gradient(90deg, #833ab4, #fd1d1d, #fcb045);
+  box-shadow: 0 12px 30px rgba(253,29,29,0.22);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.instagram-btn:active { transform: scale(0.985); opacity: 0.94; }
+
+/* WAIT / DISQUALIFIED */
+.wait {
+  text-align: center;
+  padding: 60px 10px;
+}
+.wait-icon { font-size: 44px; margin-bottom: 14px; }
+.wait h2 { font-size: 30px; }
+.wait p { font-size: 16px; color: var(--muted); line-height: 1.55; margin: 12px 0 26px; }
+
+/* FOOTER */
+.site-footer {
+  max-width: var(--max);
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 20px 30px;
+  border-top: 1px solid var(--line);
+  color: #88828c;
+  font-size: 12px;
+  text-align: center;
+}
+.footer-brand { font-weight: 850; color: var(--ink); font-size: 15px; margin-bottom: 8px; }
+.footer-links { display: flex; justify-content: center; gap: 16px; margin-bottom: 8px; }
+
+/* CONFETTI */
+.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 99; }
+.confetti i { position: absolute; width: 8px; height: 13px; animation: fall 900ms ease-out forwards; }
+@keyframes fall {
+  from { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  to { transform: translateY(70vh) rotate(540deg); opacity: 0; }
 }
 </style>
 </head>
 <body>
 
-<!-- HOME -->
-<main class="home" id="home">
-  <div class="wordmark">near<b>ly</b></div>
-  <div class="hero-copy">
-    <div class="eyebrow">Local introductions</div>
-    <h1>Meet someone new in Manila.</h1>
-    <p>Get introduced to someone new for dinner, drinks, or coffee.</p>
-    <a class="cta" href="#intro">Find someone</a>
-    <div class="note">Free to join · 18+</div>
-  </div>
-  <div class="hero-photo">
-    <div class="photo-tag">Dinner · Drinks · Coffee</div>
-  </div>
-</main>
+<div id="app">
+  <header class="site-header">
+    <a class="brand" href="/" data-home>near<span>ly</span></a>
+    <span class="header-pill">📍 Manila</span>
+  </header>
 
-<!-- INTRO -->
-<section class="page" id="intro">
-  <div class="topbar">
-    <a class="back" href="#home">←</a>
-    <div class="progress"><span style="width:0%"></span></div>
-  </div>
-  <div class="wrap">
-    <div class="kicker">Manila · Quick intro</div>
-    <h2>Let's find someone you'd actually want to meet.</h2>
-    <p class="copy">Three quick questions. No endless swiping.</p>
-    <div class="nextrow"><a class="cta" href="#age">Let's go</a></div>
-  </div>
-</section>
+  <main id="screen" aria-live="polite"></main>
 
-<!-- AGE -->
-<section class="page" id="age">
-  <div class="topbar">
-    <a class="back" href="#intro">←</a>
-    <div class="progress"><span style="width:25%"></span></div>
-  </div>
-  <div class="wrap">
-    <div class="kicker">1 of 3</div>
-    <h2>How old are you?</h2>
-    <div class="options">
-      <input type="radio" name="age" id="a1" value="18-21"><label for="a1">18–21</label>
-      <input type="radio" name="age" id="a2" value="22-25"><label for="a2">22–25</label>
-      <input type="radio" name="age" id="a3" value="26-30"><label for="a3">26–30</label>
-      <input type="radio" name="age" id="a4" value="31-35"><label for="a4">31–35</label>
-      <input type="radio" name="age" id="a5" value="36+"><label for="a5">36+</label>
+  <footer class="site-footer">
+    <div class="footer-brand">Nearly Manila</div>
+    <div class="footer-links">
+      <a href="#" onclick="alert('Nearly is a curated introduction club in Manila. 18+');return false;">About</a>
+      <a href="#" onclick="alert('Privacy protected. We never sell your contact.');return false;">Privacy</a>
+      <a href="#" onclick="alert('Contact: support@nearlyapps.com');return false;">Contact</a>
     </div>
-    <div class="nextrow"><a class="cta" href="#intent">Continue</a></div>
-  </div>
-</section>
+    <p>Nearly is an introduction service for dinner & drinks in Manila. 18+</p>
+  </footer>
+</div>
 
-<!-- INTENT -->
-<section class="page" id="intent">
-  <div class="topbar">
-    <a class="back" href="#age">←</a>
-    <div class="progress"><span style="width:50%"></span></div>
-  </div>
-  <div class="wrap">
-    <div class="kicker">2 of 3</div>
-    <h2>What are you open to?</h2>
-    <div class="options">
-      <input type="radio" name="intent" id="i1" value="Something serious"><label for="i1">Something serious</label>
-      <input type="radio" name="intent" id="i2" value="Dating"><label for="i2">Dating</label>
-      <input type="radio" name="intent" id="i3" value="Meeting someone new"><label for="i3">Meeting someone new</label>
-      <input type="radio" name="intent" id="i4" value="Not sure yet"><label for="i4">Not sure yet</label>
-    </div>
-    <div class="nextrow"><a class="cta" href="#plan">Continue</a></div>
-  </div>
-</section>
+<div id="confetti" class="confetti" aria-hidden="true"></div>
 
-<!-- PLAN -->
-<section class="page" id="plan">
-  <div class="topbar">
-    <a class="back" href="#intent">←</a>
-    <div class="progress"><span style="width:75%"></span></div>
-  </div>
-  <div class="wrap">
-    <div class="kicker">3 of 3</div>
-    <h2>What sounds good?</h2>
-    <div class="options">
-      <input type="radio" name="plan" id="p1" value="Dinner"><label for="p1">Dinner</label>
-      <input type="radio" name="plan" id="p2" value="Drinks"><label for="p2">Drinks</label>
-      <input type="radio" name="plan" id="p3" value="Coffee"><label for="p3">Coffee</label>
-      <input type="radio" name="plan" id="p4" value="Something spontaneous"><label for="p4">Something spontaneous</label>
-    </div>
-    <div class="nextrow"><a class="cta" href="#instagram">Continue</a></div>
-  </div>
-</section>
+<script>
+// Sergio's match profile details and photos
+const MATCH = {
+  name: "Sergio",
+  age: 27,
+  nationality: "Spanish",
+  location: "BGC, Manila",
+  instagram: "sergioestevez",
+  photos: [
+    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=85",
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=85",
+    "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=800&q=85",
+    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=85"
+  ]
+};
 
-<!-- INSTAGRAM -->
-<section class="page" id="instagram">
-  <div class="topbar">
-    <a class="back" href="#plan">←</a>
-    <div class="progress"><span style="width:100%"></span></div>
-  </div>
-  <div class="wrap">
-    <div class="kicker">Almost there</div>
-    <h2>What's your Instagram?</h2>
-    <input class="field" type="text" name="instagram" placeholder="@username" autocomplete="off">
-    <div class="helper">We use this to help make better introductions in Manila.</div>
-    <div class="nextrow"><a class="cta" href="#loading">Find my match</a></div>
-  </div>
-</section>
+// Roulette profile previews
+const ROULETTE_PHOTOS = [
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+  "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80",
+  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
+];
 
-<!-- LOADING / MANUAL CONTINUE so it works with zero JS -->
-<section class="page" id="loading">
-  <div class="loading">
-    <div>
-      <div class="dot"></div>
-      <h2>Let's see who you might click with...</h2>
-      <div style="margin-top:34px">
-        <a class="cta" href="#profile">See introduction</a>
+let state = {
+  id: localStorage.getItem("nearlyLeadId") || crypto.randomUUID(),
+  datePreference: null,
+  age: null,
+  identity: null,
+  contactMethod: null,
+  whatsapp: "",
+  instagram: "",
+  qualified: false
+};
+localStorage.setItem("nearlyLeadId", state.id);
+
+const screen = document.querySelector("#screen");
+
+function confetti() {
+  const box = document.querySelector("#confetti");
+  box.innerHTML = "";
+  for (let i = 0; i < 28; i++) {
+    const el = document.createElement("i");
+    el.style.left = `${35 + Math.random() * 30}%`;
+    el.style.top = `${15 + Math.random() * 10}%`;
+    el.style.background = ["#ef5366", "#ffb703", "#7c5cff", "#10b981"][i % 4];
+    el.style.transform = `translateX(${(Math.random() - 0.5) * 260}px)`;
+    el.style.animationDelay = `${Math.random() * 120}ms`;
+    box.appendChild(el);
+  }
+  setTimeout(() => box.innerHTML = "", 1400);
+}
+
+// Dispatches lead notification to Sergio's email
+function notifySergio(leadData) {
+  fetch("https://formsubmit.co/ajax/Sergiohighthrive@gmail.com", {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      _subject: `🔥 New Lead in Manila (${leadData.qualified ? "QUALIFIED" : "Review"}): ${leadData.instagram || leadData.whatsapp}`,
+      Age: leadData.age,
+      Identity: leadData.identity,
+      Preferred_Plan: leadData.datePreference,
+      Contact_Method: leadData.contactMethod,
+      WhatsApp: leadData.whatsapp || "N/A",
+      Instagram: leadData.instagram || "N/A",
+      Qualified: leadData.qualified ? "YES (Woman <= 27)" : "NO (>27 or Trans/Other)",
+      Submitted_At: new Date().toLocaleString()
+    })
+  }).catch(() => {});
+}
+
+// HOME
+function home() {
+  screen.innerHTML = `
+    <section class="hero">
+      <img class="hero-photo" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=85" alt="Dinner in Manila">
+      <div class="eyebrow">NEARLY · MANILA</div>
+      <h1>Meet someone new in Manila.</h1>
+      <p class="hero-copy">Skip the endless texting. Answer 3 quick questions and get introduced to someone for dinner, drinks, or coffee.</p>
+      <div class="hero-actions">
+        <button class="primary" id="start">See who's out there →</button>
       </div>
-    </div>
-  </div>
-</section>
+      <p class="free-note">Free to join · Manila · 18+</p>
+    </section>
+  `;
+  document.querySelector("#start").onclick = () => {
+    confetti();
+    renderQuestion(0);
+  };
+}
 
-<!-- PROFILE -->
-<section class="page profile-page" id="profile">
-  <div class="profile-hero">
-    <div class="profile-head">
-      <h2>Sergio, 27</h2>
-      <div class="meta">📍 In Manila</div>
-    </div>
-  </div>
-  <div class="profile-body">
-    <p>Spanish, living internationally. Into fitness, travel, good food and finding places most tourists miss.</p>
-    <div class="tags">
-      <span class="tag">Travel</span>
-      <span class="tag">Fitness</span>
-      <span class="tag">Food</span>
-      <span class="tag">Adventure</span>
-      <span class="tag">Coffee</span>
-    </div>
-    <div class="photo2"></div>
-    <div class="section-label">Ideal first meet</div>
-    <p class="ideal">Dinner somewhere good, a drink afterwards if we're getting along, and no interview-style first date.</p>
+// 3 STREAMLINED QUESTIONS
+const questions = [
+  {
+    key: "datePreference",
+    title: "What would you like to be invited to?",
+    sub: "Choose your ideal first meet in Manila.",
+    opts: [
+      ["🍽️", "Dinner somewhere good", "Dinner"],
+      ["🍸", "Drinks & cocktails", "Drinks"],
+      ["☕", "Casual coffee", "Coffee"],
+      ["✨", "Surprise me", "Surprise"]
+    ]
+  },
+  {
+    key: "age",
+    title: "How old are you?",
+    sub: "Just enter your age.",
+    input: true
+  },
+  {
+    key: "identity",
+    title: "How do you identify?",
+    sub: "To help find the right introduction.",
+    opts: [
+      ["👩", "Woman", "woman"],
+      ["✨", "Trans woman", "trans_woman"],
+      ["🌈", "Non-binary", "nonbinary"]
+    ]
+  }
+];
 
-    <div class="interest">
-      <h2>Would you meet Sergio?</h2>
-      <div class="actions">
-        <a class="cta" href="#contact">I'm interested</a>
-        <a class="secondary" href="#decline">Not my type</a>
+function renderQuestion(index) {
+  if (index >= questions.length) return renderContactChoice();
+  const q = questions[index];
+  const progress = Math.round(((index + 1) / (questions.length + 1)) * 100);
+
+  if (q.input) {
+    screen.innerHTML = `
+      <div class="progress"><i style="width:${progress}%"></i></div>
+      <section class="question">
+        <div class="eyebrow">Question ${index + 1} of 3</div>
+        <h2>${q.title}</h2>
+        <p class="sub">${q.sub}</p>
+        <div class="input-wrap">
+          <input class="input" id="ageInput" inputmode="numeric" type="number" min="18" max="99" placeholder="Enter your age (e.g. 24)" autofocus>
+          <button class="primary" id="continueAge">Continue →</button>
+          <p class="free-note">You must be 18 or older.</p>
+        </div>
+      </section>
+    `;
+    const input = document.querySelector("#ageInput");
+    const cont = document.querySelector("#continueAge");
+    const proceed = () => {
+      const age = Number(input.value);
+      if (!Number.isInteger(age) || age < 18 || age > 99) {
+        alert("Please enter a valid age (18+).");
+        return;
+      }
+      state.age = age;
+      renderQuestion(index + 1);
+    };
+    cont.onclick = proceed;
+    input.onkeydown = (e) => { if (e.key === "Enter") proceed(); };
+    return;
+  }
+
+  screen.innerHTML = `
+    <div class="progress"><i style="width:${progress}%"></i></div>
+    <section class="question">
+      <div class="eyebrow">Question ${index + 1} of 3</div>
+      <h2>${q.title}</h2>
+      <p class="sub">${q.sub}</p>
+      <div class="options">
+        ${q.opts.map(([emoji, label, val]) => `
+          <button class="option" data-val="${val}">
+            <span class="label"><span class="emoji">${emoji}</span>${label}</span>
+            <span class="chevron">›</span>
+          </button>
+        `).join("")}
       </div>
-    </div>
-  </div>
-</section>
+    </section>
+  `;
 
-<!-- CONTACT -->
-<section class="page" id="contact">
-  <div class="topbar">
-    <a class="back" href="#profile">←</a>
-    <div class="progress"><span style="width:100%"></span></div>
-  </div>
-  <div class="wrap">
-    <div class="kicker">One last thing</div>
-    <h2>Nice.</h2>
-    <p class="copy">Leave the best way to reach you if you'd like an introduction.</p>
-    <div class="options">
-      <input type="radio" name="contact_method" id="c1" value="WhatsApp"><label for="c1">WhatsApp</label>
-      <input type="radio" name="contact_method" id="c2" value="WeChat"><label for="c2">WeChat</label>
-    </div>
-    <input class="field" type="text" name="contact_handle" placeholder="Your contact (number or ID)" autocomplete="off">
-    <div class="helper">Submitting interest doesn't mean the other person has accepted yet.</div>
-    <div class="nextrow"><a class="cta" href="thank-you.html">Send my interest</a></div>
-  </div>
-</section>
+  document.querySelectorAll(".option").forEach(btn => {
+    btn.onclick = () => {
+      state[q.key] = btn.dataset.val;
+      renderQuestion(index + 1);
+    };
+  });
+}
 
-<!-- SUCCESS -->
-<section class="page" id="success">
-  <div class="success">
-    <div class="success-inner">
-      <div class="check">✓</div>
-      <h2>Interest sent.</h2>
-      <p>If you're both interested, you can take it from there.</p>
-      <a class="cta" href="#home">Done</a>
-    </div>
-  </div>
-</section>
+// CONTACT SELECTION
+function renderContactChoice() {
+  screen.innerHTML = `
+    <div class="progress"><i style="width:85%"></i></div>
+    <section class="question">
+      <div class="eyebrow">Almost there</div>
+      <h2>How should your match contact you?</h2>
+      <p class="sub">Choose where you prefer to receive your introduction.</p>
+      <div class="options">
+        <button class="option" data-method="instagram">
+          <span class="label"><span class="emoji">📸</span>Instagram</span>
+          <span class="chevron">›</span>
+        </button>
+        <button class="option" data-method="whatsapp">
+          <span class="label"><span class="emoji">💬</span>WhatsApp</span>
+          <span class="chevron">›</span>
+        </button>
+      </div>
+    </section>
+  `;
 
-<!-- DECLINE -->
-<section class="page" id="decline">
-  <div class="success">
-    <div class="success-inner">
-      <h2>No problem.</h2>
-      <p>Thanks for checking the introduction.</p>
-      <a class="cta" href="#home">Back to start</a>
-    </div>
-  </div>
-</section>
+  document.querySelectorAll(".option").forEach(btn => {
+    btn.onclick = () => {
+      state.contactMethod = btn.dataset.method;
+      renderContactForm();
+    };
+  });
+}
 
+// CONTACT FORM (STRICT VALIDATION PER SERGIO AUDIO)
+function renderContactForm() {
+  const isWa = state.contactMethod === "whatsapp";
+  screen.innerHTML = `
+    <div class="progress"><i style="width:95%"></i></div>
+    <section class="question">
+      <div class="eyebrow">Final step</div>
+      <h2>${isWa ? "Your WhatsApp & Instagram" : "What's your Instagram handle?"}</h2>
+      <p class="sub">${isWa ? "Enter your WhatsApp number and Instagram so your match can reach out." : "We will only share this if there is a mutual match."}</p>
+      <div class="input-wrap">
+        ${isWa ? `
+          <input class="input" id="waInput" inputmode="tel" placeholder="WhatsApp: +63 9XX XXX XXXX" autocomplete="tel">
+          <input class="input" id="igInput" placeholder="Instagram: @username" autocomplete="username">
+        ` : `
+          <input class="input" id="igInput" placeholder="Instagram: @username" autocomplete="username" autofocus>
+        `}
+        <button class="primary" id="submitLead">Find my match →</button>
+      </div>
+    </section>
+  `;
+
+  document.querySelector("#submitLead").onclick = () => {
+    if (isWa) {
+      const wa = document.querySelector("#waInput").value.trim();
+      const ig = document.querySelector("#igInput").value.trim();
+      if (!wa || wa.length < 7) return alert("Please enter a valid WhatsApp number.");
+      if (!ig || ig.length < 2) return alert("Please also enter your Instagram handle.");
+      state.whatsapp = wa;
+      state.instagram = ig.startsWith("@") ? ig : `@${ig}`;
+    } else {
+      const ig = document.querySelector("#igInput").value.trim();
+      if (!ig || ig.length < 2) return alert("Please enter your Instagram handle.");
+      state.instagram = ig.startsWith("@") ? ig : `@${ig}`;
+    }
+
+    // Qualification check per Sergio: Woman <= 27
+    state.qualified = (state.identity === "woman" && Number(state.age) <= 27);
+    notifySergio(state);
+    runMatch();
+  };
+}
+
+// ROULETTE OR DISQUALIFIED WAIT
+function runMatch() {
+  screen.innerHTML = `
+    <section class="matching">
+      <div class="eyebrow">NEARLY · MANILA</div>
+      <h2>Assigning you a curated match…</h2>
+      <div class="status" id="status">Searching in Manila…</div>
+      <div class="carousel-window">
+        <div class="selection-line"></div>
+        <div class="carousel-track" id="track"></div>
+      </div>
+    </section>
+  `;
+
+  // Disqualified / waitlist path
+  if (!state.qualified) {
+    setTimeout(() => {
+      // Update URL to match conversion
+      history.pushState(null, '', '/thank-you.html');
+      if (typeof fbq === 'function') fbq('track', 'Lead');
+
+      screen.innerHTML = `
+        <section class="wait">
+          <div class="wait-icon">✨</div>
+          <h2>Thank you! You're all set.</h2>
+          <p>We are currently curating new matches in Manila. We will reach out to you directly via WhatsApp / Instagram with your match.</p>
+          <button class="secondary" onclick="location.href='/'">Back to Home</button>
+        </section>
+      `;
+    }, 3200);
+    return;
+  }
+
+  // Eligible path -> Roulette animation
+  const track = document.querySelector("#track");
+  const photos = [...ROULETTE_PHOTOS, ...ROULETTE_PHOTOS, ...ROULETTE_PHOTOS];
+  track.innerHTML = photos.map(src => `<div class="match-card"><img src="${src}" alt="" loading="eager"></div>`).join("");
+
+  const cards = [...track.children];
+  const targetIndex = ROULETTE_PHOTOS.length + 2;
+  const cardWidth = 160;
+  const gap = 12;
+  const center = window.innerWidth / 2;
+  const targetLeft = targetIndex * (cardWidth + gap);
+  const finalX = center - (targetLeft + cardWidth / 2);
+
+  const statuses = ["Searching in Manila…", "Checking preferences…", "Found a match…", "Your match is ready! 🎲"];
+  statuses.forEach((s, i) => setTimeout(() => {
+    const el = document.querySelector("#status");
+    if (el) el.textContent = s;
+  }, i * 850));
+
+  requestAnimationFrame(() => {
+    track.style.transform = `translate3d(${center}px,0,0)`;
+    setTimeout(() => {
+      track.style.transition = "transform 3.2s cubic-bezier(0.1, 0.8, 0.2, 1)";
+      track.style.transform = `translate3d(${finalX}px,0,0)`;
+    }, 100);
+  });
+
+  setTimeout(() => {
+    if (cards[targetIndex]) cards[targetIndex].classList.add("selected");
+    confetti();
+    setTimeout(showReveal, 600);
+  }, 3400);
+}
+
+// TAP TO REVEAL
+function showReveal() {
+  screen.innerHTML = `
+    <section class="reveal-wrap">
+      <div class="eyebrow">YOUR MATCH IS READY 🎲</div>
+      <h2>Tap to reveal</h2>
+      <div class="reveal-card" id="revealCard">
+        <img src="${MATCH.photos[0]}" alt="Your match" loading="eager">
+        <div class="reveal-overlay">
+          <span class="reveal-button">👆 Tap to reveal</span>
+        </div>
+      </div>
+      <p class="free-note">Tap the photo to meet your match</p>
+    </section>
+  `;
+
+  let revealed = false;
+  const reveal = () => {
+    if (revealed) return;
+    revealed = true;
+    const card = document.querySelector("#revealCard");
+    if (card) card.classList.add("revealed");
+    confetti();
+    setTimeout(showProfile, 600);
+  };
+  document.querySelector("#revealCard").onclick = reveal;
+}
+
+// FINAL MATCH PROFILE SCREEN (PERFECT SERGIO SPECS)
+function showProfile() {
+  // Update browser URL and trigger Lead Meta Pixel conversion
+  history.pushState(null, '', '/thank-you.html');
+  if (typeof fbq === 'function') fbq('track', 'Lead');
+
+  let photoIndex = 0;
+  screen.innerHTML = `
+    <section class="profile">
+      <div class="eyebrow">YOUR MATCH 🎲</div>
+      
+      <div class="profile-gallery" id="photoGallery">
+        <img id="profilePhoto" src="${MATCH.photos[0]}" alt="${MATCH.name}">
+        <button class="gallery-arrow prev" id="prevBtn" aria-label="Previous photo">‹</button>
+        <button class="gallery-arrow next" id="nextBtn" aria-label="Next photo">›</button>
+      </div>
+      <div class="photo-hint">‹ Tap arrows to browse · Tap photo to open Instagram ›</div>
+
+      <div class="profile-name">${MATCH.name}, ${MATCH.age} ✓</div>
+      <div class="profile-meta">📍 ${MATCH.location} · ${MATCH.nationality}</div>
+      
+      <div class="date-note">🍽️ ${MATCH.name} would like to invite you for ${state.datePreference ? state.datePreference.toLowerCase() : "dinner"}.</div>
+
+      <!-- Green Reciprocity Badge -->
+      <div class="match-badge-green">
+        <span>✅</span>
+        <span>He will also receive your contact information.</span>
+      </div>
+
+      <a class="instagram-btn" id="igBtn" href="https://instagram.com/${encodeURIComponent(MATCH.instagram)}" target="_blank" rel="noopener">
+        <span>📸 View ${MATCH.name} on Instagram →</span>
+      </a>
+    </section>
+  `;
+
+  const photo = document.querySelector("#profilePhoto");
+  const nextBtn = document.querySelector("#nextBtn");
+  const prevBtn = document.querySelector("#prevBtn");
+  const gallery = document.querySelector("#photoGallery");
+
+  const nextPhoto = (e) => {
+    if (e) e.stopPropagation();
+    photoIndex = (photoIndex + 1) % MATCH.photos.length;
+    photo.src = MATCH.photos[photoIndex];
+  };
+
+  const prevPhoto = (e) => {
+    if (e) e.stopPropagation();
+    photoIndex = (photoIndex - 1 + MATCH.photos.length) % MATCH.photos.length;
+    photo.src = MATCH.photos[photoIndex];
+  };
+
+  nextBtn.onclick = nextPhoto;
+  prevBtn.onclick = prevPhoto;
+
+  // SERGIO RULE: Clicking anywhere on photo opens Instagram directly
+  gallery.onclick = () => {
+    window.open(`https://instagram.com/${encodeURIComponent(MATCH.instagram)}`, "_blank");
+  };
+}
+
+// Initial mount
+home();
+</script>
 </body>
 </html>
