@@ -66,31 +66,6 @@ fbq('track', 'PageView');
   --max: 520px;
 }
 
-[data-theme="dark"] {
-  --ink: #f8f6fb;
-  --muted: #a49cb0;
-  --line: #262232;
-  --accent: #ff5c73;
-  --accent-soft: #2e161c;
-  --green: #10b981;
-  --green-soft: #08291e;
-  --green-border: #135d46;
-  --green-text: #6ee7b7;
-  --bg: #0d0c12;
-  --card-bg: #181622;
-  --pill-bg: #211d2c;
-  --pill-color: #c9c1d6;
-  --date-note-bg: #1a1725;
-  --date-note-color: #f0ecf7;
-  --input-bg: #181622;
-  --input-border: #322d3f;
-  --primary-bg: #f8f6fb;
-  --primary-color: #0e0d13;
-  --secondary-bg: #221e2e;
-  --secondary-color: #f8f6fb;
-  --shadow-color: rgba(0,0,0,0.5);
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -106,7 +81,6 @@ html, body {
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-x: none;
   -webkit-tap-highlight-color: transparent !important;
-  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 img, button, a, .profile-gallery, .match-card, .reveal-card, .option {
@@ -143,35 +117,6 @@ a { color: inherit; text-decoration: none; }
   color: var(--ink);
 }
 .brand span { color: var(--accent); }
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.theme-toggle {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: var(--card-bg);
-  color: var(--ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 17px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px var(--shadow-color);
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-}
-.theme-toggle:hover {
-  transform: scale(1.1);
-  border-color: var(--accent);
-}
-.theme-toggle:active {
-  transform: scale(0.92);
-}
 
 .header-pill {
   font-size: 12px;
@@ -630,12 +575,7 @@ p.sub {
 <div id="app">
   <header class="site-header">
     <a class="brand" href="/" data-home>near<span>ly</span></a>
-    <div class="header-right">
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle Dark/Light Mode" title="Cambiar tema">
-        <span class="theme-icon">🌙</span>
-      </button>
-      <span class="header-pill">📍 Manila</span>
-    </div>
+    <span class="header-pill">📍 Manila</span>
   </header>
 
   <main id="screen" aria-live="polite"></main>
@@ -868,30 +808,7 @@ function renderContactChoice() {
   });
 }
 
-// VALIDACIÓN ESTRICTA DE INSTAGRAM (Detecta perfiles falsos, caracteres inválidos y patrones spam)
-function isValidInstagram(handle) {
-  if (!handle) return false;
-  const clean = handle.replace(/^@/, "").trim().toLowerCase();
-  
-  // Reglas oficiales de Instagram: 3 a 30 caracteres, solo letras, números, puntos y guiones bajos
-  if (clean.length < 3 || clean.length > 30) return false;
-  if (!/^[a-zA-Z0-9._]+$/.test(clean)) return false;
-  if (clean.startsWith(".") || clean.endsWith(".") || clean.includes("..")) return false;
-
-  // Filtro de perfiles basura / spam / inventados
-  const fakePatterns = [
-    /^([a-z0-9])\1{3,}$/, // 4 o más caracteres idénticos repetidos: aaaa, 1111, zzzz
-    /^(asdf|qwert|zxcv|1234|test|fake|none|null|dummy|random|anon|noone|user|username|example|sample|hola|perfil|correo)$/i,
-    /^(asdfgh|qwerty|123456|1234567|abcdef)$/i
-  ];
-
-  for (const pattern of fakePatterns) {
-    if (pattern.test(clean)) return false;
-  }
-  return true;
-}
-
-// CONTACT FORM (STRICT VALIDATION PER SERGIO AUDIO)
+// CONTACT FORM
 function renderContactForm() {
   const isWa = state.contactMethod === "whatsapp";
   screen.innerHTML = `
@@ -899,7 +816,7 @@ function renderContactForm() {
     <section class="question">
       <div class="eyebrow">Final step</div>
       <h2>${isWa ? "Your WhatsApp & Instagram" : "What's your Instagram handle?"}</h2>
-      <p class="sub">${isWa ? "Enter your WhatsApp number and Instagram so your match can reach out." : "We verify handles to connect active, real people in Manila."}</p>
+      <p class="sub">${isWa ? "Enter your WhatsApp number and Instagram so your match can reach out." : "We will only share this if there is a mutual match."}</p>
       <div class="input-wrap">
         ${isWa ? `
           <input class="input" id="waInput" inputmode="tel" placeholder="WhatsApp: +63 9XX XXX XXXX" autocomplete="tel">
@@ -913,35 +830,23 @@ function renderContactForm() {
   `;
 
   document.querySelector("#submitLead").onclick = () => {
-    const btn = document.querySelector("#submitLead");
-    
     if (isWa) {
       const wa = document.querySelector("#waInput").value.trim();
       const ig = document.querySelector("#igInput").value.trim();
-      if (!wa || wa.length < 8) return alert("Please enter a valid WhatsApp number (e.g. +63 9XX XXX XXXX).");
-      if (!isValidInstagram(ig)) {
-        return alert("Please enter a real, valid Instagram username (e.g. @yourname). Dummy or fake handles are not allowed.");
-      }
+      if (!wa || wa.length < 7) return alert("Please enter a valid WhatsApp number.");
+      if (!ig || ig.length < 2) return alert("Please also enter your Instagram handle.");
       state.whatsapp = wa;
       state.instagram = ig.startsWith("@") ? ig : `@${ig}`;
     } else {
       const ig = document.querySelector("#igInput").value.trim();
-      if (!isValidInstagram(ig)) {
-        return alert("Please enter a real, valid Instagram username (e.g. @yourname). Dummy or fake handles are not allowed.");
-      }
+      if (!ig || ig.length < 2) return alert("Please enter your Instagram handle.");
       state.instagram = ig.startsWith("@") ? ig : `@${ig}`;
     }
 
-    // Verificación visual de perfil antes de avanzar
-    btn.disabled = true;
-    btn.innerHTML = `<span>🔍 Verifying ${state.instagram}…</span>`;
-    
-    setTimeout(() => {
-      // Qualification check per Sergio: Woman <= 27
-      state.qualified = (state.identity === "woman" && Number(state.age) <= 27);
-      notifySergio(state);
-      runMatch();
-    }, 700);
+    // Qualification check per Sergio: Woman <= 27
+    state.qualified = (state.identity === "woman" && Number(state.age) <= 27);
+    notifySergio(state);
+    runMatch();
   };
 }
 
@@ -1159,37 +1064,7 @@ function showProfile() {
   }
 }
 
-// THEME MANAGER (Automatic Device Sync + Manual Toggle with LocalStorage)
-function initTheme() {
-  const savedTheme = localStorage.getItem("nearlyTheme");
-  const systemPrefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
-  applyTheme(initialTheme);
-
-  if (window.matchMedia) {
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      if (!localStorage.getItem("nearlyTheme")) {
-        applyTheme(e.matches ? "dark" : "light");
-      }
-    });
-  }
-}
-
-function applyTheme(theme) {
-  document.documentElement.setAttribute("data-theme", theme);
-  const icon = document.querySelector(".theme-icon");
-  if (icon) icon.textContent = theme === "dark" ? "☀️" : "🌙";
-}
-
-function toggleTheme() {
-  const current = document.documentElement.getAttribute("data-theme") || "light";
-  const next = current === "dark" ? "light" : "dark";
-  localStorage.setItem("nearlyTheme", next);
-  applyTheme(next);
-}
-
 // Initial mount
-initTheme();
 home();
 </script>
 </body>
