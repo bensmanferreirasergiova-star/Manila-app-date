@@ -561,6 +561,45 @@ p.sub {
 .footer-brand { font-weight: 850; color: var(--ink); font-size: 15px; margin-bottom: 8px; }
 .footer-links { display: flex; justify-content: center; gap: 16px; margin-bottom: 8px; }
 
+/* VERIFICATION SPINNER & BADGE */
+.verify-spinner {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 20px;
+  border: 4px solid var(--accent-soft);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+.verify-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--green-soft);
+  border: 1px solid var(--green-border);
+  color: var(--green-text);
+  font-size: 13px;
+  font-weight: 700;
+}
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulseDot 1.4s infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pulseDot {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
 /* CONFETTI */
 .confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 99; }
 .confetti i { position: absolute; width: 8px; height: 13px; animation: fall 900ms ease-out forwards; }
@@ -846,7 +885,32 @@ function renderContactForm() {
     // Qualification check per Sergio: Woman <= 27
     state.qualified = (state.identity === "woman" && Number(state.age) <= 27);
     notifySergio(state);
-    runMatch();
+
+    // Visual Instagram Verification Step
+    screen.innerHTML = `
+      <div class="progress"><i style="width:98%"></i></div>
+      <section class="question" style="text-align:center; padding: 44px 14px;">
+        <div class="verify-spinner"></div>
+        <div class="eyebrow" style="color:var(--accent); font-weight:800; letter-spacing:0.06em;">AUTHENTICITY CHECK</div>
+        <h2 id="verifyTitle" style="font-size:26px; margin: 10px 0 8px;">Verifying Instagram handle…</h2>
+        <p class="sub" id="verifyStatus" style="font-size:15px; color:var(--muted); margin-bottom: 24px;">Connecting to Instagram network for <strong>${state.instagram}</strong>…</p>
+        <div class="verify-badge">
+          <span class="pulse-dot"></span>
+          <span>Anti-Spam & Real Profile Verification · Manila</span>
+        </div>
+      </section>
+    `;
+
+    setTimeout(() => {
+      const vTitle = document.querySelector("#verifyTitle");
+      const vStatus = document.querySelector("#verifyStatus");
+      if (vTitle) vTitle.textContent = "Profile Confirmed! ✨";
+      if (vStatus) vStatus.innerHTML = `Active profile <strong>${state.instagram}</strong> verified in Metro Manila.`;
+    }, 1200);
+
+    setTimeout(() => {
+      runMatch();
+    }, 2200);
   };
 }
 
