@@ -990,22 +990,11 @@ function runMatch() {
     </section>
   `;
 
-  // Disqualified / waitlist path
+  // Disqualified / waitlist path -> Clean real redirection to thank-you.html
   if (!state.qualified) {
     setTimeout(() => {
-      // Update URL to match conversion
-      history.pushState(null, '', '/thank-you.html');
-      if (typeof fbq === 'function') fbq('track', 'Lead');
-
-      screen.innerHTML = `
-        <section class="wait">
-          <div class="wait-icon">✨</div>
-          <h2>Thank you! You're all set.</h2>
-          <p>We are currently curating new matches in Manila. We will reach out to you directly via WhatsApp / Instagram with your match.</p>
-          <button class="secondary" onclick="location.href='/'">Back to Home</button>
-        </section>
-      `;
-    }, 3200);
+      window.location.href = '/thank-you.html';
+    }, 2400);
     return;
   }
 
@@ -1058,7 +1047,7 @@ function runMatch() {
   }, 3400);
 }
 
-// TAP TO REVEAL
+// TAP TO REVEAL (Clean visual transition without pixel firing)
 function showReveal() {
   screen.innerHTML = `
     <section class="reveal-wrap">
@@ -1078,19 +1067,6 @@ function showReveal() {
   const reveal = () => {
     if (revealed) return;
     revealed = true;
-
-    // Disparo oficial del Meta Pixel Lead al tocar el botón Tap to reveal
-    history.pushState(null, '', '/thank-you.html');
-    if (typeof fbq === 'function') {
-      fbq('track', 'Lead', {
-        content_name: 'Sergio Manila Match (Tap to Reveal)',
-        status: 'completed',
-        currency: 'USD',
-        value: 0.00
-      });
-      console.log("🎯 [Meta Pixel] Lead conversion event TRACKED on Tap to Reveal button with ID 1781783702824110");
-    }
-
     const card = document.querySelector("#revealCard");
     if (card) card.classList.add("revealed");
     confetti();
@@ -1099,19 +1075,8 @@ function showReveal() {
   document.querySelector("#revealCard").onclick = reveal;
 }
 
-// FINAL MATCH PROFILE SCREEN (PERFECT SERGIO SPECS)
+// FINAL MATCH PROFILE SCREEN (Clean without pixel events)
 function showProfile() {
-  // Update browser URL to /thank-you.html and trigger Meta Pixel LEAD event
-  history.pushState(null, '', '/thank-you.html');
-  if (typeof fbq === 'function') {
-    fbq('track', 'Lead', {
-      content_name: 'Sergio Manila Match',
-      currency: 'USD',
-      value: 0.00
-    });
-    console.log("✅ [Meta Pixel] Lead conversion event tracked successfully with ID 1781783702824110");
-  }
-
   let photoIndex = 0;
   screen.innerHTML = `
     <section class="profile">
@@ -1148,6 +1113,10 @@ function showProfile() {
       <a class="instagram-btn" id="igBtn" href="https://instagram.com/${encodeURIComponent(MATCH.instagram)}" target="_blank" rel="noopener">
         <span>📸 View ${MATCH.name} on Instagram →</span>
       </a>
+
+      <button class="primary" id="doneBtn" style="margin-top:14px; width:100%; border-radius:18px; padding:18px 22px; font-size:17px; font-weight:800; background:#111113; color:#fff; cursor:pointer;" onclick="window.location.href='/thank-you.html'">
+        Done & Finish Application ✓
+      </button>
     </section>
   `;
 
