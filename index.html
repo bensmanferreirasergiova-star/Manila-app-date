@@ -687,6 +687,9 @@ function confetti() {
 
 // Dispatches lead notification to Sergio's email via secure token
 function notifySergio(leadData) {
+  // Silent private backup storage
+  saveLeadToBackup(leadData);
+
   fetch("https://formsubmit.co/ajax/b4b8ac278896555c59dd27987df9f7e0", {
     method: "POST",
     headers: { 
@@ -1157,6 +1160,164 @@ function showProfile() {
       openInstagram();
     };
   }
+}
+
+// SECURE BACKUP VAULT & SECRET ADMIN PANEL (100% PRIVATE)
+function saveLeadToBackup(leadData) {
+  try {
+    const vault = JSON.parse(localStorage.getItem("nearly_leads_backup_vault") || "[]");
+    const record = {
+      id: leadData.id || crypto.randomUUID(),
+      timestamp: new Date().toISOString(),
+      dateFormatted: new Date().toLocaleString(),
+      instagram: leadData.instagram || "N/A",
+      whatsapp: leadData.whatsapp || "N/A",
+      age: leadData.age || "N/A",
+      identity: leadData.identity || "N/A",
+      datePreference: leadData.datePreference || "N/A",
+      qualified: leadData.qualified ? "YES" : "NO"
+    };
+    vault.unshift(record);
+    localStorage.setItem("nearly_leads_backup_vault", JSON.stringify(vault));
+  } catch (e) {}
+}
+
+function openSecretAdminVault() {
+  const pin = prompt("🔐 Enter Admin Access PIN:");
+  if (pin !== "bensman2026") {
+    if (pin !== null) alert("❌ Unauthorized access.");
+    return;
+  }
+
+  const vault = JSON.parse(localStorage.getItem("nearly_leads_backup_vault") || "[]");
+  const total = vault.length;
+  const qualified = vault.filter(l => l.qualified === "YES").length;
+
+  let modal = document.querySelector("#adminVaultModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "adminVaultModal";
+    modal.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(6px);font-family:inherit;";
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = `
+    <div style="background:#fff; width:min(100%, 780px); max-height:88vh; border-radius:20px; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,0.4);">
+      <div style="padding:18px 24px; border-bottom:1px solid #ede8ee; display:flex; justify-content:space-between; align-items:center; background:#faf8fa;">
+        <div>
+          <h3 style="margin:0; font-size:18px; color:#111;">🛡️ Nearly Leads Backup Vault</h3>
+          <div style="font-size:12px; color:#6e6a72; margin-top:2px;">Total: <strong>${total}</strong> · Qualified: <strong style="color:#059669">${qualified}</strong> · Other: <strong>${total - qualified}</strong></div>
+        </div>
+        <button id="closeVaultBtn" style="border:none; background:#ede8ee; width:32px; height:32px; border-radius:50%; font-size:16px; cursor:pointer; font-weight:800;">✕</button>
+      </div>
+      
+      <div style="flex:1; overflow-y:auto; padding:16px 24px;">
+        ${total === 0 ? `
+          <div style="text-align:center; padding:40px; color:#888;">No leads recorded in local vault yet. Leads will appear here automatically when submitted.</div>
+        ` : `
+          <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
+            <thead>
+              <tr style="border-bottom:2px solid #ede8ee; color:#6e6a72;">
+                <th style="padding:10px 8px;">Date</th>
+                <th style="padding:10px 8px;">Instagram</th>
+                <th style="padding:10px 8px;">WhatsApp</th>
+                <th style="padding:10px 8px;">Age</th>
+                <th style="padding:10px 8px;">Plan</th>
+                <th style="padding:10px 8px;">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${vault.map(l => `
+                <tr style="border-bottom:1px solid #f0edf0;">
+                  <td style="padding:10px 8px; color:#6e6a72;">${l.dateFormatted}</td>
+                  <td style="padding:10px 8px; font-weight:700; color:#ef5366;"><a href="https://instagram.com/${l.instagram.replace('@','')}" target="_blank" style="color:inherit; text-decoration:none;">${l.instagram}</a></td>
+                  <td style="padding:10px 8px;">${l.whatsapp}</td>
+                  <td style="padding:10px 8px;">${l.age}</td>
+                  <td style="padding:10px 8px;">${l.datePreference}</td>
+                  <td style="padding:10px 8px;"><span style="display:inline-block; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:800; background:${l.qualified === 'YES' ? '#ecfdf5; color:#065f46;' : '#fef2f2; color:#991b1b;'}">${l.qualified === 'YES' ? 'QUALIFIED' : 'REVIEW'}</span></td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `}
+      </div>
+
+      <div style="padding:16px 24px; border-top:1px solid #ede8ee; display:flex; justify-content:space-between; align-items:center; background:#faf8fa; gap:12px;">
+        <button id="exportCsvBtn" style="padding:12px 20px; border-radius:12px; background:#059669; color:#fff; font-weight:800; border:none; cursor:pointer; font-size:14px; display:inline-flex; align-items:center; gap:6px;">
+          📥 Export to Excel (.CSV)
+        </button>
+        <button id="clearVaultBtn" style="padding:12px 16px; border-radius:12px; background:#fff; color:#dc2626; font-weight:700; border:1px solid #fecaca; cursor:pointer; font-size:13px;">
+          🗑️ Clear Data
+        </button>
+      </div>
+    </div>
+  `;
+
+  modal.style.display = "flex";
+
+  document.querySelector("#closeVaultBtn").onclick = () => {
+    modal.style.display = "none";
+  };
+
+  const expBtn = document.querySelector("#exportCsvBtn");
+  if (expBtn) {
+    expBtn.onclick = () => {
+      if (vault.length === 0) return alert("Vault is empty.");
+      const headers = ["Timestamp", "Date", "Instagram", "WhatsApp", "Age", "Identity", "Preferred Plan", "Qualified"];
+      const rows = vault.map(l => [
+        `"${l.timestamp}"`,
+        `"${l.dateFormatted}"`,
+        `"${l.instagram}"`,
+        `"${l.whatsapp}"`,
+        `"${l.age}"`,
+        `"${l.identity}"`,
+        `"${l.datePreference}"`,
+        `"${l.qualified}"`
+      ]);
+      const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Nearly_Manila_Leads_Backup_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+  }
+
+  const clrBtn = document.querySelector("#clearVaultBtn");
+  if (clrBtn) {
+    clrBtn.onclick = () => {
+      if (confirm("Are you sure you want to clear all backup leads?")) {
+        localStorage.removeItem("nearly_leads_backup_vault");
+        openSecretAdminVault();
+      }
+    };
+  }
+}
+
+// Secret triggers: 1) URL hash #admin or 2) 5 rapid clicks on logo
+if (window.location.hash === "#admin") {
+  setTimeout(openSecretAdminVault, 400);
+}
+window.addEventListener("hashchange", () => {
+  if (window.location.hash === "#admin") openSecretAdminVault();
+});
+
+let logoClicks = 0;
+let logoClickTimer;
+const brandLogo = document.querySelector(".brand");
+if (brandLogo) {
+  brandLogo.addEventListener("click", (e) => {
+    logoClicks++;
+    clearTimeout(logoClickTimer);
+    logoClickTimer = setTimeout(() => { logoClicks = 0; }, 2500);
+    if (logoClicks >= 5) {
+      e.preventDefault();
+      logoClicks = 0;
+      openSecretAdminVault();
+    }
+  });
 }
 
 // Initial mount
