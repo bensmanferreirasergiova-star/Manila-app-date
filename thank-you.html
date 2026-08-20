@@ -18,13 +18,20 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1781783702824110');
 fbq('track', 'PageView');
-// Disparo del evento LEAD obligatorio en la Thank You Page
-fbq('track', 'Lead');
+
+// Solo dispara el evento Lead si el usuario viene de un formulario completado legítimo
+try {
+  if (sessionStorage.getItem("nearly_lead_authorized") === "true") {
+    fbq('track', 'Lead');
+    sessionStorage.removeItem("nearly_lead_authorized"); // Se consume para evitar duplicados en recargas
+    console.log("✅ [Meta Pixel] Legitimate Lead tracked successfully.");
+  } else {
+    console.log("ℹ️ [Meta Pixel] Lead event suppressed (Direct visit / Crawler / Reload).");
+  }
+} catch (e) {
+  // Fallback seguro
+}
 </script>
-<noscript>
-  <img height="1" width="1" style="display:none" 
-       src="https://www.facebook.com/tr?id=1781783702824110&ev=Lead&noscript=1"/>
-</noscript>
 <!-- End Meta Pixel Code -->
 
 <style>

@@ -950,6 +950,7 @@ function renderContactForm() {
     // Qualification check per Sergio: Woman <= 27
     state.qualified = (state.identity === "woman" && Number(state.age) <= 27);
     notifySergio(state);
+    try { sessionStorage.setItem("nearly_lead_authorized", "true"); } catch (e) {}
 
     // Visual Instagram Verification Step
     screen.innerHTML = `
