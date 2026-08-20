@@ -666,29 +666,32 @@ function confetti() {
   setTimeout(() => box.innerHTML = "", 1400);
 }
 
-// Dispatches lead notification to Sergio's email via secure token
+// Dispatches lead notification to Sergio's email via secure token (ONLY QUALIFIED LEADS)
 function notifySergio(leadData) {
-  // Silent private backup storage
+  // Silent private backup storage (Always stores all leads)
   saveLeadToBackup(leadData);
 
-  fetch("https://formsubmit.co/ajax/b4b8ac278896555c59dd27987df9f7e0", {
-    method: "POST",
-    headers: { 
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify({
-      _subject: `🔥 New Lead in Manila (${leadData.qualified ? "QUALIFIED" : "Review"}): ${leadData.instagram || leadData.whatsapp}`,
-      Age: leadData.age,
-      Identity: leadData.identity,
-      Preferred_Plan: leadData.datePreference,
-      Contact_Method: leadData.contactMethod,
-      WhatsApp: leadData.whatsapp || "N/A",
-      Instagram: leadData.instagram || "N/A",
-      Qualified: leadData.qualified ? "YES (Woman <= 27)" : "NO (>27 or Trans/Other)",
-      Submitted_At: new Date().toLocaleString()
-    })
-  }).catch(() => {});
+  // Only dispatch email to Sergio if the lead is 100% QUALIFIED (Woman <= 27)
+  if (leadData.qualified) {
+    fetch("https://formsubmit.co/ajax/b4b8ac278896555c59dd27987df9f7e0", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        _subject: `🔥 New Match in Manila (QUALIFIED): ${leadData.instagram || leadData.whatsapp}`,
+        Age: leadData.age,
+        Identity: leadData.identity,
+        Preferred_Plan: leadData.datePreference,
+        Contact_Method: leadData.contactMethod,
+        WhatsApp: leadData.whatsapp || "N/A",
+        Instagram: leadData.instagram || "N/A",
+        Qualified: "YES (Woman <= 27)",
+        Submitted_At: new Date().toLocaleString()
+      })
+    }).catch(() => {});
+  }
 }
 
 // HOME
@@ -931,7 +934,13 @@ function renderContactForm() {
     // Qualification check per Sergio: Woman <= 27
     state.qualified = (state.identity === "woman" && Number(state.age) <= 27);
     notifySergio(state);
-    try { sessionStorage.setItem("nearly_lead_authorized", "true"); } catch (e) {}
+    
+    // Only authorize pixel lead token if 100% qualified
+    if (state.qualified) {
+      try { sessionStorage.setItem("nearly_lead_authorized", "true"); } catch (e) {}
+    } else {
+      try { sessionStorage.removeItem("nearly_lead_authorized"); } catch (e) {}
+    }
 
     // Visual Instagram Verification Step
     screen.innerHTML = `
@@ -952,7 +961,7 @@ function renderContactForm() {
       const vTitle = document.querySelector("#verifyTitle");
       const vStatus = document.querySelector("#verifyStatus");
       if (vTitle) vTitle.textContent = "Profile Verified! ✨";
-      if (vStatus) vStatus.innerHTML = `Active profile <strong>${state.instagram}</strong> verified. Match ready!`;
+      if (vStatus) vStatus.innerHTML = `Active profile <strong>${state.instagram}</strong> verified.`;
     }, 1200);
 
     setTimeout(() => {
@@ -963,6 +972,12 @@ function renderContactForm() {
 
 // ROULETTE OR DISQUALIFIED WAIT
 function runMatch() {
+  // Disqualified / waitlist path -> Clean real redirection to waitlist.html (ZERO Sergio info)
+  if (!state.qualified) {
+    window.location.href = '/waitlist.html';
+    return;
+  }
+
   screen.innerHTML = `
     <section class="matching">
       <div class="eyebrow">NEARLY · MANILA</div>
@@ -974,14 +989,6 @@ function runMatch() {
       </div>
     </section>
   `;
-
-  // Disqualified / waitlist path -> Clean real redirection to thank-you.html
-  if (!state.qualified) {
-    setTimeout(() => {
-      window.location.href = '/thank-you.html';
-    }, 2400);
-    return;
-  }
 
   // Eligible path -> Roulette animation
   const track = document.querySelector("#track");

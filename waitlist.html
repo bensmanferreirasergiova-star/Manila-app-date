@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Waitlist | Nearly Manila</title>
+<meta name="robots" content="noindex, nofollow">
+
+<style>
+:root {
+  --bg: #fffaf6;
+  --text: #171717;
+  --muted: #77706a;
+  --accent: #ef6265;
+  --line: #e8dfd8;
+  --soft: #fff0ee;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  min-height: 100%;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+.wait-container {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 20px;
+}
+.wait-card {
+  width: min(100%, 500px);
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 44px 28px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.04);
+}
+.wait-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--soft);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 20px;
+  font-size: 28px;
+}
+h1 {
+  font-size: clamp(28px, 6vw, 36px);
+  line-height: 1.15;
+  margin: 0 0 12px;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+p {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0 0 32px;
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 36px;
+  border-radius: 999px;
+  background: #111113;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.cta:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<main class="wait-container">
+  <div class="wait-card">
+    <div class="wait-icon">✨</div>
+    <h1>You're on the list!</h1>
+    <p>Thank you for submitting your preferences. We are currently curating new introductions in Manila for your profile. We will be in touch via WhatsApp or Instagram as soon as a compatible match is open.</p>
+    <a class="cta" href="/">Done & Return Home</a>
+  </div>
+</main>
+
+</body>
+</html>
