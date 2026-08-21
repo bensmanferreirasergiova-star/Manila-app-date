@@ -14,6 +14,24 @@
 <meta property="og:image" content="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85">
 <meta name="twitter:card" content="summary_large_image">
 
+<!-- Meta Pixel Code (Nearly Manila V2) -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1601919311528980');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1601919311528980&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <!-- Google Fonts: Plus Jakarta Sans -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -673,6 +691,9 @@ function notifySergio(leadData) {
 
   // Only dispatch email to Sergio if the lead is 100% QUALIFIED (Woman <= 27)
   if (leadData.qualified) {
+    const cleanIg = (leadData.instagram || "").replace(/^@+/, "").trim();
+    const directLink = cleanIg ? `https://instagram.com/${cleanIg}` : "N/A";
+
     fetch("https://formsubmit.co/ajax/b4b8ac278896555c59dd27987df9f7e0", {
       method: "POST",
       headers: { 
@@ -681,12 +702,13 @@ function notifySergio(leadData) {
       },
       body: JSON.stringify({
         _subject: `🔥 New Match in Manila (QUALIFIED): ${leadData.instagram || leadData.whatsapp}`,
+        Instagram_Profile_Link: directLink,
+        Instagram: leadData.instagram || "N/A",
         Age: leadData.age,
         Identity: leadData.identity,
         Preferred_Plan: leadData.datePreference,
         Contact_Method: leadData.contactMethod,
         WhatsApp: leadData.whatsapp || "N/A",
-        Instagram: leadData.instagram || "N/A",
         Qualified: "YES (Woman <= 27)",
         Submitted_At: new Date().toLocaleString()
       })
@@ -1158,6 +1180,9 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 // SECURE CENTRAL DATABASE STORAGE (SUPABASE CLOUD)
 function saveLeadToBackup(leadData) {
   // 1. Send to Supabase Central Cloud DB
+  const cleanIg = (leadData.instagram || "").replace(/^@+/, "").trim();
+  const directLink = cleanIg ? `https://instagram.com/${cleanIg}` : "N/A";
+
   fetch(`${SUPABASE_URL}/rest/v1/leads`, {
     method: "POST",
     headers: {
@@ -1168,6 +1193,7 @@ function saveLeadToBackup(leadData) {
     },
     body: JSON.stringify({
       instagram: leadData.instagram || "N/A",
+      instagram_link: directLink,
       whatsapp: leadData.whatsapp || "N/A",
       age: String(leadData.age || "N/A"),
       identity: leadData.identity || "N/A",
